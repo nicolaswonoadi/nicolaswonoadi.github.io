@@ -14,40 +14,70 @@
     </style>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    
+
 </head>
 
 <body>
 
     <form>
-        <input type="radio" name="paymode" class="infobox" value="Elementary School">Elementary School <br>
-        <input type="radio" name="paymode" class="infobox" value="Junior High-School">Junior High-School
-        Card<br>
-        <input type="radio" name="paymode" class="infobox" value="Senior High-School">Senior High-School<br> 
+        <input type="checkbox" id="shirt" name="shirt" value=25 class="infobox">Shirt $25 <br>
+        <input type="checkbox" id="pants" name="pants" value=70 class="infobox">Pants $70<br>
+        <input type="checkbox" id="shoes" name="shoes" value=120 class="infobox">Shoes $120<br>
+        <input type="checkbox" id="hat" name="hat" value=15 class="infobox">hat $15<br>
         <script>
-            $(document).ready(function () { //saya mengganti metode pembayaran dengan pemilihan tingkat pendidikan dengan mengganti value dan isi di baris di atas.
-                $('.error').hide(); //hide adalah method untuk menghilangkan sesuatu. dalam konteks ini error message di line 45.
-                $('.submit').click(function (event) { //submit button di form akan menjalankan function setelah di klik
-                    var amt = 0;//untuk mengecek apakah sudah ada opsi yang dipilih atau belum
-                    var count = $('input:checked').length;//mengecek dengan melihat jumlah yang diklik. 0 artinya tidak ada yang dipilih, 1 artinya ada.
+            $(document).ready(function () { //saya mengubah pembelian makanan di fast-food restaurant menjadi fashion outlet yang menjual 4 jenis pakaian.
+                $('.error').hide(); //tidak menunjukkan error message di awal page.
+                $('.submit').click(function (event) { //fungsi ketika tombol 'submit' di klik.
+                    var count = 0; //berawal 0
+                    var amt = 0; //jumlah awal 0
+                    $('form').find(':checkbox').each(function () { //loop function ketika submit dipencet berkali-kali
+                        if ($(this).is(':checked')) {//menghitung jumlah apabila di check.
+                            count++; //menghitung jumlah checkbox yang di check.
+                            amt = amt + parseInt($(this).val()); //parseint mengubah string menjadi integer agar bisa dihitung
+                        }
+                    });
                     if (count == 0) {
-                        $('p.result').hide(); //selalu menutupkan/menghilangkan pesan berhasil
-                        $('.error').show(); //menunjukkan error message apabila belum ada opsi yang dipilih
+                        $('p.result').hide();//tidak menampilkan result message
+                        $('.error').show(); //menampilkan error message karena belum ada box yang di centang
                     }
                     else {
-                        $('.error').hide(); //menghilangkan error message setelah dipilih ataupun sebelum diklik.
-                        $('p.result').show(); //menunjukkan result message
-                        $('p.result').text('You have selected '+ $('input:checked').attr("value"));//result message diubah menyesuaikan dengan opsi yang dipilih.
+                        $('.error').hide(); //menghapus error message
+                        $('p.result').show(); //menampilkan result message
+                        $('p.result').text('Your bill is $ ' + amt); //yang menjelaskan total pembayaran
+                    }
+                    event.preventDefault();//prevent default agar form yang diklik tidak lanjut ke halaman selanjutnya, karena halaman belum siap.
+                });
+            });
+
+
+
+            $(document).ready(function () { //sama seperti yang atas, tetapi mengecek total checkbox menggunakan metode length.
+                $('.error').hide();
+                $('.submit').click(function (event) {//yang dibaca oleh HTML adalah yang dibawah, atau yang terbaru.
+                    var amt = 0;
+                    var count = $('input:checked').length; //di atas menggunakan count, disini menggunakan length
+                    if (count == 0) { //length menghitung berapa banyak checkbox yang di klik, tetapi melihat dari panjang string.
+                        $('p.result').hide();
+                        $('.error').show();
+                    }
+                    else {
+                        $('form').find(':checkbox').each(function () {//sisanya sama seperti kumpulan javascript dan jquery yang di atas
+                            if ($(this).is(':checked')) {//hanya menunjukkan ada 2 cara untuk menghitung berapa checkbox yang di klik.
+                                amt = amt + parseInt($(this).val());
+                            }
+                        });
+                        $('.error').hide();
+                        $('p.result').show();
+                        $('p.result').text('Your bill is $ ' + amt);
                     }
                     event.preventDefault();
                 });
             });
         </script>
-        <p class="error">Select at least one Option </p>
+        <p class="error">Select at least one checkbox </p>
         <p class="result"></p>
         <input class="submit" type="submit" value="Submit">
     </form>
-
 </body>
 
 </html>
