@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>05211942000008 - Alexander Nicolas Wonoadi</title>
+    <style>
+        .infobox {
+            margin-top: 15px;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+</head>
+
+<body>
+
+    <form>
+        <input type="radio" name="paymode" class="infobox" value="Elementary School">Elementary School <br>
+        <input type="radio" name="paymode" class="infobox" value="Junior High-School">Junior High-School
+        Card<br>
+        <input type="radio" name="paymode" class="infobox" value="Senior High-School">Senior High-School<br> 
+        <script>
+            $(document).ready(function () { //saya mengganti metode pembayaran dengan pemilihan tingkat pendidikan dengan mengganti value dan isi di baris di atas.
+                $('.error').hide(); //hide adalah method untuk menghilangkan sesuatu. dalam konteks ini error message di line 45.
+                $('.submit').click(function (event) { //submit button di form akan menjalankan function setelah di klik
+                    var amt = 0;//untuk mengecek apakah sudah ada opsi yang dipilih atau belum
+                    var count = $('input:checked').length;//mengecek dengan melihat jumlah yang diklik. 0 artinya tidak ada yang dipilih, 1 artinya ada.
+                    if (count == 0) {
+                        $('p.result').hide(); //selalu menutupkan/menghilangkan pesan berhasil
+                        $('.error').show(); //menunjukkan error message apabila belum ada opsi yang dipilih
+                    }
+                    else {
+                        $('.error').hide(); //menghilangkan error message setelah dipilih ataupun sebelum diklik.
+                        $('p.result').show(); //menunjukkan result message
+                        $('p.result').text('You have selected '+ $('input:checked').attr("value"));//result message diubah menyesuaikan dengan opsi yang dipilih.
+                    }
+                    event.preventDefault();
+                });
+            });
+        </script>
+        <p class="error">Select at least one Option </p>
+        <p class="result"></p>
+        <input class="submit" type="submit" value="Submit">
+    </form>
+
+</body>
+
+</html>
